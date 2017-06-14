@@ -2,13 +2,17 @@ var cells;
 var playerData;
 var turn = 0;
 var scl = 10;
+var lastTurnX = 0;
+var lastTurnY = 0;
+var len0= 0;
+var len1=0;
 
 function setup(){
-  createCanvas(scl*100+1,scl*100+1);
   cells = [];
   playerData = undefined;
   refreshData();
-  background(51);
+  createCanvas(scl*len0+1,scl*len1+1);
+  background(0);
   noFill();
   stroke(255);
   for(var i = 0; i < cells.length; i++){
@@ -26,7 +30,7 @@ function setup(){
     if(cell.Walls[3] === false) line(x,y+scl,x,y);
   }
 
-  frameRate(5);
+  frameRate(3);
   //setInterval(refreshData, 5000);
 }
 
@@ -41,7 +45,12 @@ function draw(){
   console.log("Turn #", playerData[turn].turn, "(",x, ",",y,")");
   fill(0,255,0);
   stroke(0);
-  ellipse(x * scl + scl/2, y * scl + scl/2, scl, scl);
+  ellipse(x * scl + scl/2, y * scl + scl/2, scl/1.5, scl/1.5);
+  
+  fill(0,0,0)
+  ellipse(lastTurnX * scl + scl/2, lastTurnY*scl + scl/2, scl/1.5, scl/1.5);
+  lastTurnX = player.currentCell.x;
+  lastTurnY = player.currentCell.y;
   turn++;
 
 
@@ -55,6 +64,8 @@ function refreshData(){
         cells.push(data.Cells[i][j]);
       }
     }
+	len0 = data.Cells.length;
+	len1=data.Cells[1].length;
 
 
     data = JSON.parse(document.getElementById("player").innerText);
