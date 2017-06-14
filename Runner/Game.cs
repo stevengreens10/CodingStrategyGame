@@ -27,6 +27,10 @@ namespace CSharpRunner
         public Cell GetStartCell() => Maze.StartCell;
         public Cell GetEndCell() => Maze.EndCell;
 
+        internal void PrepForNextTurn()
+        {
+            Maze.movesThisTurn = 0;
+        }
 
         
     }

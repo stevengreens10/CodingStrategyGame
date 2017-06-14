@@ -30,6 +30,8 @@ namespace CSharpRunner
             {
                 if (win) break;
 
+                game.PrepForNextTurn();
+
                 game.turn = i;
                 bot.DoTurn(game);
 
