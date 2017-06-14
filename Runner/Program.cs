@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System;
+using System.Linq;
 
 namespace CSharpRunner
 {
@@ -10,7 +11,7 @@ namespace CSharpRunner
     {
         
         static readonly int MAX_TURNS = 1000;
-        static string HTML_FILE_PATH = "\\index.html";
+        static string HTML_FILE_PATH = Directory.GetCurrentDirectory() + "\\index.html";
         static Stopwatch watch;
 
         //Args: 
@@ -28,15 +29,17 @@ namespace CSharpRunner
             {
 
                 var maze = new Maze(int.Parse(args[1]), int.Parse(args[2]), int.Parse(args[3]));
-                var player = new Player(maze.StartCell);
+                var lastPlayer = new Player(maze.StartCell);
                 var turns = new List<Game>();
                 var bot = Bot.FromFile(args[0]);
                 var win = false;
                 Game game;
+                Player player;
 
                 for (int i = 0; i < MAX_TURNS; i++)
                 {
                     if (win) break;
+                    player = new Player(lastPlayer.currentCell);
                     game = new Game(maze, player, i);
                     game.PrepForNextTurn();
 
@@ -46,6 +49,8 @@ namespace CSharpRunner
                         win = true;
 
                     turns.Add(game);
+                    lastPlayer = player;
+
                 }
 
                 Log("bot finished running");

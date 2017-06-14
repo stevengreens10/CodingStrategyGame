@@ -126,15 +126,37 @@ namespace CSharpRunner
             var loc = p.CurrentCell.GetLocation();
 
             //dont let the player get out of the map
-            if (loc.Y == 0 && dir == Direction.North) return;
-            if (loc.Y == Cells.GetLength(1) && dir == Direction.South) return;
-            if (loc.X == 0 && dir == Direction.West) return;
-            if (loc.X == Cells.GetLength(0) && dir == Direction.East) return;
+            if (loc.Y == 0 && dir == Direction.North)
+            {
+                Program.Log("Warning: Player tried to get out of the map");
+                return;
+            }
+            if (loc.Y == Cells.GetLength(1) && dir == Direction.South)
+            {
+                Program.Log("Warning: Player tried to get out of the map");
+                return;
+            }
+
+            if (loc.X == 0 && dir == Direction.West)
+            {
+                Program.Log("Warning: Player tried to get out of the map");
+                return;
+            }
+
+            if (loc.X == Cells.GetLength(0) && dir == Direction.East)
+            {
+                Program.Log("Warning: Player tried to get out of the map");
+                return;
+            }
 
             if (p.CurrentCell.Walls[(int)dir])
             {
-                p.CurrentCell = p.CurrentCell.Neighbors[(int)dir];
+                p.currentCell = p.currentCell.Neighbors[(int)dir];
                 movesThisTurn++;
+            }
+            else
+            {
+                Program.Log($"player tried to get into a wall");
             }
 
         }
