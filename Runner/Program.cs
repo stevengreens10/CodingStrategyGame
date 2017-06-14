@@ -12,7 +12,7 @@ namespace CSharpRunner
         static string PLAYER_MOVEMENT_FILE_PATH = "";
         
         static readonly int MAX_TURNS = 1000;
-        static string HTML_FILE_PATH = "";
+        static string HTML_FILE_PATH = "index.html";
         static Stopwatch watch;
 
         //Args: 
@@ -61,12 +61,6 @@ namespace CSharpRunner
                 Log("bot finished running");
                 Log("writing JSON data");
 
-                //using (var sw = new StreamWriter(MAZE_FILE_PATH, false))
-                //    sw.WriteLine(JsonConvert.SerializeObject(maze, Formatting.None));
-
-                //using (var sw = new StreamWriter(PLAYER_MOVEMENT_FILE_PATH, false))
-                //    sw.WriteLine(JsonConvert.SerializeObject(turns, Formatting.None));
-
                 GenerateHtmlFile(JsonConvert.SerializeObject(maze, Formatting.None), JsonConvert.SerializeObject(turns, Formatting.None));
 
 
@@ -74,6 +68,7 @@ namespace CSharpRunner
 
                 watch.Stop();
                 Log($"all done");
+                Process.Start(HTML_FILE_PATH);
                 Console.ReadLine();
             }
             catch (InvalidOperationException ioe)
@@ -89,9 +84,7 @@ namespace CSharpRunner
                 Console.ReadLine();
             }
             
-            #if !DEBUG
-            Process.Start(HTML_FILE_PATH);
-            #endif
+
 
         }
 
@@ -104,8 +97,8 @@ namespace CSharpRunner
 
         public static void GenerateHtmlFile(string mazeData, string playerData)
         {
-            using (var sw = new StreamWriter("index.html"))
-                sw.WriteLine($"<html><head><title>Visualizer</title><style> body {{ text-align: center; }}</style><script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.7/p5.js\"></script><script src=\"main.js\"></script></head><body bgcolor=\"#ede24b\"><p hidden id=\"maze\" name=\"player\">{mazeData}</p><p hidden id=\"player\" name=\"player\">{playerData}</p></body></html>");
+            using (var sw = new StreamWriter(HTML_FILE_PATH))
+                sw.WriteLine($"<html><head><title>Visualizer</title><style> body {{ text-align: center; }}</style><script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.7/p5.js\"></script><script src=\"main.js\"></script></head><body bgcolor=\"#ede24b\"><p hidden id=\"maze\" name=\"maze\">{mazeData}</p><p hidden id=\"player\" name=\"player\">{playerData}</p></body></html>");
         }
 
     }

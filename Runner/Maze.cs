@@ -83,6 +83,10 @@ namespace CSharpRunner
 
             }
 
+            for (int i = 0; i < Cells.GetLength(0); i++)
+                for (int j = 0; j < Cells.GetLength(1); j++)
+                    Cells[i, j].Visited = 0;
+
             return Cells[Cells.GetLength(0) - 1, Cells.GetLength(1) - 1];
 
         }
