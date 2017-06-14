@@ -1,35 +1,26 @@
-﻿namespace Game
+﻿namespace CSharpRunner
 {
-    class Player
+    public class Player : MapObject
     {
-
-        private Cell CurrentCell;
-        private Maze Maze;
-
-        public Player(Maze Maze)
+        private Cell currentCell;
+        public Cell CurrentCell
         {
-            this.Maze = Maze;
-            CurrentCell = Maze.GetStartingCell();
-        }
-
-        public void Move(Cell c)
-        {
-            Cell[] Neighbors = CurrentCell.GetNeighbors();
-            bool IsNeighbor = false;
-
-            for(int i = 0; i < Neighbors.Length; i++)
+            get
             {
-                if(Neighbors[i] == c)
-                {
-                    IsNeighbor = true;
-                }
+                return currentCell;
             }
-
-            if (IsNeighbor)
+            internal set
             {
-                CurrentCell = c;
-                CurrentCell.Visit();
+                currentCell = value;
+                currentCell.Visited++;
             }
         }
+        public Player(Cell start)
+        {
+            CurrentCell = start;
+        }
+
+        public override Location GetLocation() => CurrentCell.GetLocation();
+
     }
 }

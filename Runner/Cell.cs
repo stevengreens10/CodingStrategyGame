@@ -1,50 +1,27 @@
-﻿using System;
+﻿using System.Collections.Generic;
 
-namespace Game
+namespace CSharpRunner
 {
-
-    class Cell
+    public class Cell : MapObject
     {
-
-        private Wall[] Walls; // up right down left | 0 1 2 3 | N E S W
-        private int X, Y;
-        private Maze Maze;
-        private int TimesVisited = 0;
-
-        public Cell(int X, int Y, Maze Maze)
+        private Location location;
+        public Wall[] Walls { get; private set; } // top down right left;
+        public Cell[] Neighbors { get; private set; } // top down right left;
+        public int Visited { get; internal set; }
+        public int Size { get; private set; }
+        public List<MapObject> Contents { get; private set; }
+        public Cell(Location loc, int size)
         {
+            location = loc;
             Walls = new Wall[4];
-            this.Maze = Maze;
-            this.X = X;
-            this.Y = Y;
-
-            for(int i = 0; i < 4; i++)
-            {
-                Walls[i] = new Wall();
-                Walls[i].IsBroken = (new Random().Next(100) <= 50);
-            }
+            Neighbors = new Cell[4];
+            Walls.Initialize();
+            Visited = 0;
+            Size = size;
+            Contents = new List<MapObject>();
         }
 
-        public Cell[] GetNeighbors()
-        {
-            Cell[] Neighbors = new Cell[4];
-            Neighbors[0] = Maze.GetCells()[X , Y + 1]; // NORTH
-            Neighbors[1] = Maze.GetCells()[X + 1, Y]; // EAST
-            Neighbors[2] = Maze.GetCells()[X , Y - 1]; // SOUTH
-            Neighbors[3] = Maze.GetCells()[X - 1 , Y]; // WEST
-            return Neighbors;
-        }
-
-        public void Visit()
-        {
-            TimesVisited++;
-        }
-
-        public Wall[] GetWalls()
-        {
-            return Walls;
-        }
+        public override Location GetLocation() => location;
 
     }
-
 }

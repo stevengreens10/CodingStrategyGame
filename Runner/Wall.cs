@@ -1,7 +1,15 @@
-﻿namespace Game
+﻿namespace CSharpRunner
 {
-    class Wall
+    public class Wall
     {
-        public bool IsBroken = false;
+        public bool IsBroken { get; internal set; }
+        public Wall(bool broken = false)
+        {
+            IsBroken = broken;
+        }
+        public Wall()
+        {
+            IsBroken = false;
+        }
     }
 }
