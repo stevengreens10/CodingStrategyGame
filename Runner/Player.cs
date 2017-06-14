@@ -4,10 +4,8 @@ namespace CSharpRunner
 {
     public class Player : MapObject
     {
-
-        private Cell currentCell;
-
         [JsonProperty()]
+        internal Cell currentCell;
         private Location Location;
 
         internal Cell CurrentCell
