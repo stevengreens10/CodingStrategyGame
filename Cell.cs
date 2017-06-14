@@ -7,31 +7,31 @@ namespace Game
     {
 
         private Wall[] walls; // up right down left | 0 1 2 3 | N E S W
-        private int x, y;
-        private Maze maze;
-        private int timesVisited = 0;
+        private int X, Y;
+        private Maze Maze;
+        private int TimesVisited = 0;
 
-        public Cell(int x, int y, Maze maze)
+        public Cell(int X, int Y, Maze Maze)
         {
-            this.maze = maze;
-            this.x = x;
-            this.y = y;
+            this.Maze = Maze;
+            this.X = X;
+            this.Y = Y;
 
             for(int i = 0; i < 4; i++)
             {
                 walls[i] = new Wall();
-                walls[i].isBroken = (new Random().Next(100) <= 50);
+                walls[i].IsBroken = (new Random().Next(100) <= 50);
             }
         }
 
-        public Cell[] getNeighbors()
+        public Cell[] GetNeighbors()
         {
-            Cell[] neighbors = new Cell[4];
-            neighbors[0] = maze.getCells()[x][y + 1]; // NORTH
-            neighbors[1] = maze.getCells()[x + 1][y]; // EAST
-            neighbors[2] = maze.getCells()[x][y - 1]; // SOUTH
-            neighbors[3] = maze.getCells()[x - 1][y]; // WEST
-            return neighbors;
+            Cell[] Neighbors = new Cell[4];
+            Neighbors[0] = Maze.getCells()[X][Y + 1]; // NORTH
+            Neighbors[1] = Maze.getCells()[X + 1][Y]; // EAST
+            Neighbors[2] = Maze.getCells()[X][Y - 1]; // SOUTH
+            Neighbors[3] = Maze.getCells()[X - 1][Y]; // WEST
+            return Neighbors;
         }
 
     }

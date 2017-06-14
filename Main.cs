@@ -11,6 +11,8 @@ namespace Game
         static void Main(string[] args)
         {
             Maze maze = new Maze();
+            Console.WriteLine(maze.getCells().Length);
+            Console.ReadKey();
         }
     }
 }

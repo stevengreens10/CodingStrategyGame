@@ -3,29 +3,31 @@
     class Player
     {
 
-        private Cell currentCell;
+        private Cell CurrentCell;
+        private Maze Maze;
 
-        public Player(Maze maze)
+        public Player(Maze Maze)
         {
-
+            this.Maze = Maze;
+            CurrentCell = Maze.GetStartingCell();
         }
 
         public void Move(Cell c)
         {
-            Cell[] neighbors = currentCell.getNeighbors();
-            bool isNeighbor = false;
+            Cell[] Neighbors = CurrentCell.GetNeighbors();
+            bool IsNeighbor = false;
 
-            for(int i = 0; i < neighbors.Length; i++)
+            for(int i = 0; i < Neighbors.Length; i++)
             {
-                if(neighbors[i] == c)
+                if(Neighbors[i] == c)
                 {
-                    isNeighbor = true;
+                    IsNeighbor = true;
                 }
             }
 
-            if (isNeighbor)
+            if (IsNeighbor)
             {
-                currentCell = c;
+                CurrentCell = c;
             }
         }
     }

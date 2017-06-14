@@ -2,6 +2,6 @@
 {
     class Wall
     {
-        public bool isBroken = false;
+        public bool IsBroken = false;
     }
 }
