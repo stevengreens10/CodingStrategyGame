@@ -1,23 +1,31 @@
-﻿namespace CSharpRunner
+﻿using Newtonsoft.Json;
+
+namespace CSharpRunner
 {
     public class Player : MapObject
     {
+
         private Cell currentCell;
-        public Cell CurrentCell
+
+        [JsonProperty()]
+        private Location Location;
+
+        internal Cell CurrentCell
         {
             get
             {
                 return currentCell;
             }
-            internal set
+            set
             {
                 currentCell = value;
                 currentCell.Visited++;
             }
         }
-        public Player(Cell start)
+        internal Player(Cell start)
         {
             CurrentCell = start;
+            Location = currentCell.GetLocation();
         }
 
         public override Location GetLocation() => CurrentCell.GetLocation();

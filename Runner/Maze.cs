@@ -1,19 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Newtonsoft.Json;
 
 namespace CSharpRunner
 {
     public class Maze
     {
-        private Cell[,] Cells { get; set; }
+        [JsonProperty()]
+        internal Cell[,] Cells { get; set; }
+
+        [JsonProperty()]
         public Cell StartCell { get; }
+
+        [JsonProperty()]
         public Cell EndCell { get; }
 
         internal int movesThisTurn = 0;
+
         internal Maze(int rows, int cols, int cellSize = 10)
         {
             Cells = new Cell[rows, cols];
+
+            Program.Log($"Generating maze [{rows} x {cols}]..");
 
             for (int x = 0; x < rows; x++)
                 for (int y = 0; y < cols; y++)
@@ -22,6 +31,9 @@ namespace CSharpRunner
             SetNeighbors();
             StartCell = Cells[0,0];
             EndCell = BreakWalls();
+
+            Program.Log("Finished generating maze");
+
         }
 
         private void SetNeighbors()
@@ -35,8 +47,8 @@ namespace CSharpRunner
                     loc = c.GetLocation();
 
                     c.Neighbors[0] = loc.Y == 0 ? null : Cells[x, y - 1];
-                    c.Neighbors[1] = loc.X == Cells.GetLength(0) ? null : Cells[x + 1, y];
-                    c.Neighbors[2] = loc.Y == Cells.GetLength(1) ? null : Cells[x, y + 1];
+                    c.Neighbors[1] = loc.X == Cells.GetLength(0) - 1 ? null : Cells[x + 1, y];
+                    c.Neighbors[2] = loc.Y == Cells.GetLength(1) - 1 ? null : Cells[x, y + 1];
                     c.Neighbors[3] = loc.X == 0 ? null : Cells[x - 1, y];
 
                 }
@@ -79,18 +91,22 @@ namespace CSharpRunner
             if (c.GetLocation().X == c2.GetLocation().X) // need to remove up or down
             {
                 if (c.GetLocation().Y > c2.GetLocation().Y)
-                    c.Walls[0].IsBroken = true;
+                {
+                        c.Walls[0] = true;
+                }
 
-                else
-                    c.Walls[2].IsBroken = true;
+                else 
+                    c.Walls[2] = true;
 
             }
             else if (c.GetLocation().Y == c2.GetLocation().Y) // need to remove left or right
             {
                 if (c.GetLocation().X > c2.GetLocation().X)
-                    c.Walls[3].IsBroken = true;
+                {
+                        c.Walls[3] = true;
+                }
                 else
-                    c.Walls[1].IsBroken = true;
+                    c.Walls[1] = true;
 
             }
         }
@@ -105,7 +121,7 @@ namespace CSharpRunner
             if (loc.X == 0 && dir == Direction.West) return;
             if (loc.X == Cells.GetLength(0) && dir == Direction.East) return;
 
-            if (p.CurrentCell.Walls[(int)dir].IsBroken)
+            if (p.CurrentCell.Walls[(int)dir])
             {
                 p.CurrentCell = p.CurrentCell.Neighbors[(int)dir];
                 movesThisTurn++;

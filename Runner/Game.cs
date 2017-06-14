@@ -3,20 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace CSharpRunner
 {
     public class Game
     {
-        internal int turn;
-        private Maze Maze;
-        private Player Player;
+        public int turn;
+        internal Maze Maze;
 
-        internal Game(Maze maze, Player player)
+        [JsonProperty()]
+        internal Player Player;
+
+        internal Game(Maze maze, Player player, int turn)
         {
             Maze = maze;
             Player = player;
-            turn = 0;
+            this.turn = turn;
         }
 
         public void Move(Direction dir) => Maze.Move(Player, dir);
@@ -26,6 +29,7 @@ namespace CSharpRunner
         public Cell GetCurrentCell() => Player.CurrentCell;
         public Cell GetStartCell() => Maze.StartCell;
         public Cell GetEndCell() => Maze.EndCell;
+        public void Debug(string s) => Program.Log($"{{Turn {GetTurn()}}} Debug message: {s}", ConsoleColor.DarkGray);
 
         internal void PrepForNextTurn()
         {

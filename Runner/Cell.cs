@@ -1,24 +1,33 @@
 ﻿using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace CSharpRunner
 {
     public class Cell : MapObject
     {
+
         private Location location;
-        public Wall[] Walls { get; private set; } // top down right left;
-        public Cell[] Neighbors { get; private set; } // top down right left;
+        public bool[] Walls { get; private set; } // top down right left;
+        internal Cell[] Neighbors { get; private set; } // top down right left;
         public int Visited { get; internal set; }
-        public int Size { get; private set; }
         public List<MapObject> Contents { get; private set; }
+
+        [JsonProperty()]
+        private int x, y;
+
         public Cell(Location loc, int size)
         {
             location = loc;
-            Walls = new Wall[4];
+            Walls = new bool[4];
             Neighbors = new Cell[4];
-            Walls.Initialize();
+
+            for (int i = 0; i < Walls.Length; i++)
+                Walls[i] = false;
+
             Visited = 0;
-            Size = size;
             Contents = new List<MapObject>();
+            x = loc.X;
+            y = loc.Y;
         }
 
         public override Location GetLocation() => location;

@@ -30,7 +30,10 @@ namespace CSharpRunner
                 cp.ReferencedAssemblies.Add(assembly.Location);
                 CompilerResults cr;
 
-                //check if the directory exists, and if it does search for .cs files
+
+                Program.Log($"Attempting to compile file \"{path}\"");
+
+                //check if the directory exists, and if it does search for .cs files and compile them
                 if (Directory.Exists(path))
                 {
                     string[] files = Directory.GetFiles(path, "*.cs", SearchOption.AllDirectories);
@@ -38,17 +41,26 @@ namespace CSharpRunner
                 }
                 else cr = cs.CompileAssemblyFromFile(cp, new string[] { path });
 
+                
+
                 //check for compiler errors
                 if (cr.Errors.HasErrors)
                 {
                     foreach (CompilerError e in cr.Errors)
                         if (!e.IsWarning)
-                            Console.Error.WriteLine(e.ToString());
+                        {
+                            Program.Log("-------------");
+                            Program.Log($"[CompileError]: {e.ErrorText}", ConsoleColor.DarkRed);
+                            Program.Log($"File: \"{e.FileName}\" Line: {e.Line}", ConsoleColor.DarkMagenta);
+                            Program.Log("-------------");
+                        }
                     throw new InvalidOperationException("Compliation failed, check your code.");
                 }
 
+                Program.Log("Compile finished");
+
                 var types = cr.CompiledAssembly.GetTypes();
-                var botType = types.Where(x => x is IMazeBot).FirstOrDefault();
+                var botType = types.Where(x => x.GetInterfaces().Contains(typeof(IMazeBot))).FirstOrDefault();
                 if (botType == null)
                     throw new TypeLoadException("Could not find an IMazeBot class");
 
