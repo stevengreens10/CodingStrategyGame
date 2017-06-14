@@ -40,6 +40,11 @@ namespace Game
             TimesVisited++;
         }
 
+        public Wall[] GetWalls()
+        {
+            return Walls;
+        }
+
     }
 
 }
