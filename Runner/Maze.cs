@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace CSharpRunner
 {
@@ -7,7 +9,8 @@ namespace CSharpRunner
         private Cell[,] Cells { get; set; }
         public Cell StartCell { get; }
         public Cell EndCell { get; }
-        private int movesThisTurn = 0;
+
+        internal int movesThisTurn = 0;
         internal Maze(int rows, int cols, int cellSize = 10)
         {
             Cells = new Cell[rows, cols];
@@ -41,7 +44,55 @@ namespace CSharpRunner
         private Cell BreakWalls() //should 'break' the walls and return the end cell
         {
             //TODO
-            throw new NotImplementedException();
+            Cell current = Cells[0, 0];
+            Stack<Cell> stack = new Stack<Cell>();
+            int cells_left = Cells.GetLength(0) * Cells.GetLength(1);
+            while (cells_left > 0 || stack.Count != 0)
+            {
+                cells_left = 0;
+                current.Visited++;
+                var next = current.Neighbors.Where(x => x != null && x.Visited == 0).OrderBy(x => Guid.NewGuid()).FirstOrDefault();
+                if (next != null)
+                {
+                    stack.Push(current);
+                    next.Visited++;
+                    RemoveWalls(current, next);
+                    current = next;
+                }
+                else if (stack.Count != 0)
+                {
+                    current = stack.Pop();
+
+                }
+
+                for (int i = 0; i < Cells.GetLength(0); i++)
+                    for (int j = 0; j < Cells.GetLength(1); j++)
+                        if (Cells[i, j].Visited == 0) cells_left++;
+
+            }
+
+            return Cells[Cells.GetLength(0) - 1, Cells.GetLength(1) - 1];
+
+        }
+        private void RemoveWalls(Cell c, Cell c2)
+        {
+            if (c.GetLocation().X == c2.GetLocation().X) // need to remove up or down
+            {
+                if (c.GetLocation().Y > c2.GetLocation().Y)
+                    c.Walls[0].IsBroken = true;
+
+                else
+                    c.Walls[2].IsBroken = true;
+
+            }
+            else if (c.GetLocation().Y == c2.GetLocation().Y) // need to remove left or right
+            {
+                if (c.GetLocation().X > c2.GetLocation().X)
+                    c.Walls[3].IsBroken = true;
+                else
+                    c.Walls[1].IsBroken = true;
+
+            }
         }
         internal void Move(Player p, Direction dir)
         {
