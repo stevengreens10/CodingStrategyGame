@@ -8,11 +8,9 @@ namespace CSharpRunner
 {
     class Program
     {
-        static string MAZE_FILE_PATH = "";
-        static string PLAYER_MOVEMENT_FILE_PATH = "";
         
         static readonly int MAX_TURNS = 1000;
-        static string HTML_FILE_PATH = "index.html";
+        static string HTML_FILE_PATH = "\\index.html";
         static Stopwatch watch;
 
         //Args: 
@@ -25,14 +23,6 @@ namespace CSharpRunner
             Console.WriteLine("Starting.. ");
             watch = new Stopwatch();
             watch.Start();
-
-            #if DEBUG
-
-            PLAYER_MOVEMENT_FILE_PATH = Directory.GetCurrentDirectory() + "\\playerdata.json";
-            MAZE_FILE_PATH = Directory.GetCurrentDirectory() + "\\mazedata.json";
-            HTML_FILE_PATH = Directory.GetCurrentDirectory() + "\\index.html";
-
-            #endif
 
             try
             {
@@ -59,12 +49,9 @@ namespace CSharpRunner
                 }
 
                 Log("bot finished running");
-                Log("writing JSON data");
+                Log("generating replay");
 
                 GenerateHtmlFile(JsonConvert.SerializeObject(maze, Formatting.None), JsonConvert.SerializeObject(turns, Formatting.None));
-
-
-                Log("finished writing JSON data");
 
                 watch.Stop();
                 Log($"all done");
