@@ -1,10 +1,10 @@
 var cells;
 var playerData;
 var turn = 0;
-var scl = 5;
+var scl = 10;
 
 function setup(){
-  createCanvas(501,501);
+  createCanvas(scl*100+1,scl*100+1);
   cells = [];
   playerData = undefined;
   refreshData();
