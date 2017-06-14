@@ -2,11 +2,12 @@ var cells;
 var player;
 
 function setup(){
-  createCanvas(640,480);
+  createCanvas(1001,1001);
   cells = [];
   player = undefined;
   refreshData();
-  setInterval(refreshData, 1000);
+  noLoop();
+  setInterval(refreshData, 5000);
 }
 
 function draw(){
@@ -15,20 +16,33 @@ function draw(){
   stroke(255);
   for(var i = 0; i < cells.length; i++){
     var cell = cells[i];
-
-    rect(cell.x,cell.y,40,40);
+    var scl = 10;
+    var x = cell.x*scl;
+    var y = cell.y*scl;
+    //Top left to top right
+    if(cell.Walls[0]) line(x,y,x+scl,y);
+    //Top right to bottom right
+    if(cell.Walls[1]) line(x+scl,y,x+scl,y+scl);
+    //Bottom right to bottom left
+    if(cell.Walls[2]) line(x+scl,y+scl,x,y+scl);
+    //Bottom left to top left
+    if(cell.Walls[3]) line(x,y+scl,x,y);
   }
 
-  if(player){
-    fill(0,255,0);
-    stroke(0);
-    ellipse(player.x,player.y,20,20);
-  }
+
 }
 
 function refreshData(){
-  loadJSON('./data.json', function(data){
-    if(data.cells) cells = data.cells;
-    if(data.player) player = data.player;
+  loadJSON('./mazedata.json', function(data){
+    for(var i = 0; i < data.Cells.length; i++){
+      for(var j = 0; j < data.Cells[i].length; j++){
+        cells.push(data.Cells[i][j]);
+      }
+    }
+    redraw();
+  });
+
+  loadJSON('./playerdata.json', function(data){
+    if(data[0].Player) player = data[0].Player;
   });
 }
