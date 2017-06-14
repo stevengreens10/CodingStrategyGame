@@ -1,12 +1,12 @@
 var cells;
 var player;
+var turn = 0;
 
 function setup(){
   createCanvas(501,501);
   cells = [];
-  player = undefined;
+  playerData = undefined;
   refreshData();
-  noLoop();
   //setInterval(refreshData, 5000);
 }
 
@@ -30,6 +30,14 @@ function draw(){
     if(cell.Walls[3] === false) line(x,y+scl,x,y);
   }
 
+  if(turn >= 1000) turn = 0;
+  var player = playerData[turn].Player;
+  fill(0,255,0);
+  stroke(0);
+  ellipse(player.Location.X * scl, player.Location.Y * scl, scl, scl);
+  turn++;
+
+
 
 }
 
@@ -41,9 +49,9 @@ function refreshData(){
       }
     }
     redraw();
-  
 
-  /*loadJSON('./playerdata.json', function(data){
-    if(data[0].Player) player = data[0].Player;
+
+    data = JSON.parse(document.getElementById("maze").innerText);
+    if(data) playerData = data;
   });*/
 }
