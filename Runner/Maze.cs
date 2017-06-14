@@ -92,22 +92,28 @@ namespace CSharpRunner
             {
                 if (c.GetLocation().Y > c2.GetLocation().Y)
                 {
-                        c.Walls[0] = true;
+                    c.Walls[0] = true;
+                    c2.Walls[2] = true;
                 }
 
-                else 
+                else
+                {
                     c.Walls[2] = true;
-
+                    c2.Walls[0] = true;
+                }
             }
             else if (c.GetLocation().Y == c2.GetLocation().Y) // need to remove left or right
             {
                 if (c.GetLocation().X > c2.GetLocation().X)
                 {
-                        c.Walls[3] = true;
+                    c.Walls[3] = true;
+                    c2.Walls[1] = true;
                 }
                 else
+                {
                     c.Walls[1] = true;
-
+                    c2.Walls[3] = true;
+                }
             }
         }
         internal void Move(Player p, Direction dir)

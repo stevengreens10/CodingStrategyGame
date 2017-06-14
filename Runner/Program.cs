@@ -61,11 +61,14 @@ namespace CSharpRunner
                 Log("bot finished running");
                 Log("writing JSON data");
 
-                using (var sw = new StreamWriter(MAZE_FILE_PATH, false))
-                    sw.WriteLine(JsonConvert.SerializeObject(maze, Formatting.None));
+                //using (var sw = new StreamWriter(MAZE_FILE_PATH, false))
+                //    sw.WriteLine(JsonConvert.SerializeObject(maze, Formatting.None));
 
-                using (var sw = new StreamWriter(PLAYER_MOVEMENT_FILE_PATH, false))
-                    sw.WriteLine(JsonConvert.SerializeObject(turns, Formatting.None));
+                //using (var sw = new StreamWriter(PLAYER_MOVEMENT_FILE_PATH, false))
+                //    sw.WriteLine(JsonConvert.SerializeObject(turns, Formatting.None));
+
+                GenerateHtmlFile(JsonConvert.SerializeObject(maze, Formatting.None), JsonConvert.SerializeObject(turns, Formatting.None));
+
 
                 Log("finished writing JSON data");
 
@@ -98,5 +101,12 @@ namespace CSharpRunner
             Console.WriteLine($"[{watch.Elapsed.TotalSeconds}]: {message}");
             Console.ForegroundColor = ConsoleColor.Gray;
         }
+
+        public static void GenerateHtmlFile(string mazeData, string playerData)
+        {
+            using (var sw = new StreamWriter("index.html"))
+                sw.WriteLine($"<html><head><title>Visualizer</title><style> body {{ text-align: center; }}</style><script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.7/p5.js\"></script><script src=\"main.js\"></script></head><body bgcolor=\"#ede24b\"><p hidden id=\"maze\" name=\"player\">{mazeData}</p><p hidden id=\"player\" name=\"player\">{playerData}</p></body></html>");
+        }
+
     }
 }
