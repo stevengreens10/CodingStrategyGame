@@ -10,8 +10,8 @@ namespace Game
     {
         static void Main(string[] args)
         {
-            Maze maze = new Maze();
-            Console.WriteLine("There are " + maze.getCells().Length + " cells.");
+            Maze Maze = new Maze();
+            Console.WriteLine("There are " + Maze.GetCells().Length + " cells.");
             Console.ReadKey();
         }
     }

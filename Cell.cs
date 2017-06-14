@@ -28,10 +28,10 @@ namespace Game
         public Cell[] GetNeighbors()
         {
             Cell[] Neighbors = new Cell[4];
-            Neighbors[0] = Maze.getCells()[X , Y + 1]; // NORTH
-            Neighbors[1] = Maze.getCells()[X + 1, Y]; // EAST
-            Neighbors[2] = Maze.getCells()[X , Y - 1]; // SOUTH
-            Neighbors[3] = Maze.getCells()[X - 1 , Y]; // WEST
+            Neighbors[0] = Maze.GetCells()[X , Y + 1]; // NORTH
+            Neighbors[1] = Maze.GetCells()[X + 1, Y]; // EAST
+            Neighbors[2] = Maze.GetCells()[X , Y - 1]; // SOUTH
+            Neighbors[3] = Maze.GetCells()[X - 1 , Y]; // WEST
             return Neighbors;
         }
 

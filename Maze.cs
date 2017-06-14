@@ -23,7 +23,7 @@
             Player = new Player(this);
         }
 
-        public Cell[,] getCells()
+        public Cell[,] GetCells()
         {
             return Cells;
         }
