@@ -11,14 +11,19 @@ function setup(){
 
 function draw(){
   background(51);
+  noFill();
+  stroke(255);
   for(var i = 0; i < cells.length; i++){
     var cell = cells[i];
 
-    //DISPLAY CELLS
-
+    rect(cell.x,cell.y,40,40);
   }
 
-  //DISPLAY PLAYER
+  if(player){
+    fill(0,255,0);
+    stroke(0);
+    ellipse(player.x,player.y,20,20);
+  }
 }
 
 function refreshData(){
