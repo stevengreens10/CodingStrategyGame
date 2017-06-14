@@ -28,6 +28,7 @@
             if (IsNeighbor)
             {
                 CurrentCell = c;
+                CurrentCell.Visit();
             }
         }
     }

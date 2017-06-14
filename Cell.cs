@@ -13,7 +13,6 @@ namespace Game
 
         public Cell(int X, int Y, Maze Maze)
         {
-            if (TimesVisited == 100) Console.Write("HI");
             Walls = new Wall[4];
             this.Maze = Maze;
             this.X = X;
@@ -34,6 +33,11 @@ namespace Game
             Neighbors[2] = Maze.getCells()[X , Y - 1]; // SOUTH
             Neighbors[3] = Maze.getCells()[X - 1 , Y]; // WEST
             return Neighbors;
+        }
+
+        public void Visit()
+        {
+            TimesVisited++;
         }
 
     }
