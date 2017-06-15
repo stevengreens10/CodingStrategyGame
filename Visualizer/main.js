@@ -6,6 +6,8 @@ var lastTurnX = 0;
 var lastTurnY = 0;
 var len0= 0;
 var len1=0;
+var FPS = 3;
+var stopped = false;
 
 function setup(){
   cells = [];
@@ -13,27 +15,50 @@ function setup(){
   refreshData();
   createCanvas(scl*len0+1,scl*len1+1);
   createP("");
-  var rewind = createButton("Rewind");
-  var slow = createButton("Slow");
-  var normal = createButton("Normal");
-  var fast = createButton("Fast");
-  var fastForward = createButton("Fast Forward")
+  var restart = createButton("Restart");
+  var rewind = createButton("<<");
+  var slow = createButton("-Speed");
+  var stopButton = createButton("Stop");
+  var fast = createButton("+Speed");
+  var fastForward = createButton(">>")
+  
+  
+  restart.mousePressed(function(){
+	  stopped = false;
+	  turn = 0;
+  });
+  
   rewind.mousePressed(function(){
     turn-=25;
     if(turn < 0) turn = 0;
   });
+  
   slow.mousePressed(function(){
-    frameRate(3);
+    FPS /= 2;
+	if (FPS < 1) FPS = 1; 
   });
-  normal.mousePressed(function(){
-    frameRate(6);
-  });
+  
   fast.mousePressed(function(){
-    frameRate(60);
+	  if (stopped)
+	  {
+		  FPS = 3;
+		  stopped = false;
+	  }
+	  else
+	  {
+		  FPS *= 2;
+	  }
   });
+  
   fastForward.mousePressed(function(){
     turn+=25;
   });
+  
+  stopButton.mousePressed(function(){
+	  stopped = true;
+  });
+  
+  
   background(0);
   noFill();
   stroke(255);
@@ -52,13 +77,16 @@ function setup(){
     if(cell.Walls[3]) line(x,y+scl,x,y);
   }
 
-  frameRate(6);
+  
 }
 
 function draw(){
+	
 
-
-  if(turn >= 1000) turn = 0;
+  frameRate(FPS);
+  
+  if (!stopped) {
+  //if(turn >= 1000) turn = 0;
   var player = playerData[turn].Player;
   var x = player.currentCell.x;
   var y = player.currentCell.y;
@@ -75,7 +103,7 @@ function draw(){
 
 
   turn++;
-
+  }
 
 
 }
