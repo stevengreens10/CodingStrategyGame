@@ -17,9 +17,15 @@ namespace CSharpRunner
             set
             {
                 currentCell = value;
-                currentCell.Visited++;
             }
         }
+
+        internal void SetCurrentCell(Cell c)
+        {
+            currentCell = c;
+            c.Visited++;
+        }
+
         internal Player(Cell start)
         {
             CurrentCell = start;

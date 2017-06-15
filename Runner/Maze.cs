@@ -160,7 +160,7 @@ namespace CSharpRunner
 
             if (p.CurrentCell.Walls[(int)dir] == 0)
             {
-                p.currentCell = p.currentCell.Neighbors[(int)dir];
+                p.SetCurrentCell(p.currentCell.Neighbors[(int)dir]);
                 movesThisTurn++;
             }
             else
@@ -173,7 +173,7 @@ namespace CSharpRunner
         internal void Move(Player p, Cell c)
         {
             if (p.currentCell.Neighbors.Contains(c) && WallBetweenCellsIsBroken(p.currentCell, c))
-                p.currentCell = c;
+                p.SetCurrentCell(c);
             else
             {
                 Program.Log($"{p} tried to move to {c}, which is not reachable");
