@@ -11,5 +11,11 @@ namespace CSharpRunner
             var loc2 = other.GetLocation();
             return Abs(loc.X - loc2.X) + Abs(loc.Y - loc2.Y);
         }
+
+        public override string ToString()
+        {
+            var loc = GetLocation();
+            return $"[Location: {loc.X}, {loc.Y}]";
+        }
     }
 }

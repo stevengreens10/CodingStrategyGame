@@ -23,6 +23,10 @@ namespace CSharpRunner
         }
 
         public void Move(Direction dir) => Maze.Move(Player, dir);
+        public void Move(Cell c)
+        {
+            Maze.Move(Player, c);
+        }
         
         public int GetTurn() => turn;
 
@@ -57,7 +61,7 @@ namespace CSharpRunner
                 return null;
             }
 
-            if (!Player.CurrentCell.Walls[(int)dir])
+            if (Player.CurrentCell.Walls[(int)dir] == 0)
             {
                 return Player.currentCell.Neighbors[(int)dir];
             }

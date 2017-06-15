@@ -32,7 +32,8 @@ namespace CSharpRunner
             StartCell = Cells[0,0];
             EndCell = BreakWalls();
 
-            EndCell.Walls[2] = false;
+            StartCell.Walls[0] = 0;
+            EndCell.Walls[2] = 0;
 
             Program.Log("Finished generating maze");
 
@@ -57,13 +58,11 @@ namespace CSharpRunner
         }
         private Cell BreakWalls() //should 'break' the walls and return the end cell
         {
-            //TODO
             Cell current = Cells[0, 0];
             Stack<Cell> stack = new Stack<Cell>();
             int cells_left = Cells.GetLength(0) * Cells.GetLength(1);
             while (cells_left > 0 || stack.Count != 0)
             {
-                cells_left = 0;
                 current.Visited++;
                 var next = current.Neighbors.Where(x => x != null && x.Visited == 0).OrderBy(x => Guid.NewGuid()).FirstOrDefault();
                 if (next != null)
@@ -79,9 +78,7 @@ namespace CSharpRunner
 
                 }
 
-                for (int i = 0; i < Cells.GetLength(0); i++)
-                    for (int j = 0; j < Cells.GetLength(1); j++)
-                        if (Cells[i, j].Visited == 0) cells_left++;
+                cells_left--;
 
             }
 
@@ -94,31 +91,33 @@ namespace CSharpRunner
         }
         private void RemoveWalls(Cell c, Cell c2)
         {
-            if (c.GetLocation().X == c2.GetLocation().X) // need to remove up or down
+            Location loc = c.GetLocation(), loc2 = c2.GetLocation();
+
+            if (loc.X == loc2.X) // need to remove up or down
             {
-                if (c.GetLocation().Y > c2.GetLocation().Y)
+                if (loc.Y > loc2.Y)
                 {
-                    c.Walls[0] = false;
-                    c2.Walls[2] = false;
+                    c.Walls[0] = 0;
+                    c2.Walls[2] = 0;
                 }
 
                 else
                 {
-                    c.Walls[2] = false;
-                    c2.Walls[0] = false;
+                    c.Walls[2] = 0;
+                    c2.Walls[0] = 0;
                 }
             }
-            else if (c.GetLocation().Y == c2.GetLocation().Y) // need to remove left or right
+            else if (loc.Y == loc2.Y) // need to remove left or right
             {
-                if (c.GetLocation().X > c2.GetLocation().X)
+                if (loc.X > loc2.X)
                 {
-                    c.Walls[3] = false;
-                    c2.Walls[1] = false;
+                    c.Walls[3] = 0;
+                    c2.Walls[1] = 0;
                 }
                 else
                 {
-                    c.Walls[1] = false;
-                    c2.Walls[3] = false;
+                    c.Walls[1] = 0;
+                    c2.Walls[3] = 0;
                 }
             }
         }
@@ -156,7 +155,7 @@ namespace CSharpRunner
                 return;
             }
 
-            if (!p.CurrentCell.Walls[(int)dir])
+            if (p.CurrentCell.Walls[(int)dir] == 0)
             {
                 p.currentCell = p.currentCell.Neighbors[(int)dir];
                 movesThisTurn++;
@@ -166,6 +165,25 @@ namespace CSharpRunner
                 Program.Log($"player tried to get into a wall");
             }
 
+        }
+
+        internal void Move(Player p, Cell c)
+        {
+            if (p.currentCell.Neighbors.Contains(c) && WallBetweenCellsIsBroken(p.currentCell, c))
+                p.currentCell = c;
+            else
+            {
+                Program.Log($"{p} tried to move to {c}, which is not reachable");
+            }
+        }
+
+        private bool WallBetweenCellsIsBroken(Cell c, Cell c2)
+        {
+            Location loc = c.GetLocation(), loc2 = c2.GetLocation();
+
+            return loc.X == loc2.X ? (loc.Y > loc2.Y ? c.Walls[0] == 0 && c2.Walls[2] == 0 : c.Walls[2] == 0 && c2.Walls[0] == 0)
+                : loc.Y == loc2.Y ? (loc.X > loc2.X ? c.Walls[3] == 0 && c2.Walls[1] == 0 : c.Walls[1] == 0 && c2.Walls[3] == 0)
+                : false;
         }
     }
 }

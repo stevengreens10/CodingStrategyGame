@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
+using System.Linq;
 
 namespace CSharpRunner
 {
@@ -7,10 +8,19 @@ namespace CSharpRunner
     {
 
         private Location location;
-        public bool[] Walls { get; private set; } // top down right left;
+
+        [JsonProperty()]
+        internal int[] Walls { get; set; } // top down right left;
+
+        [JsonIgnore()]
+        public bool[] WallsArray { get { return Walls.Select(x => System.Convert.ToBoolean(x)).ToArray(); } }
+
         internal Cell[] Neighbors { get; private set; } // top down right left;
+
         public int Visited { get; internal set; }
-        public List<MapObject> Contents { get; private set; }
+
+        private List<MapObject> Contents { get; set; }
+
 
         [JsonProperty()]
         private int x, y;
@@ -18,11 +28,11 @@ namespace CSharpRunner
         public Cell(Location loc, int size)
         {
             location = loc;
-            Walls = new bool[4];
+            Walls = new int[4];
             Neighbors = new Cell[4];
 
             for (int i = 0; i < Walls.Length; i++)
-                Walls[i] = true;
+                Walls[i] = 1;
 
             Visited = 0;
             Contents = new List<MapObject>();
@@ -31,6 +41,8 @@ namespace CSharpRunner
         }
 
         public override Location GetLocation() => location;
+            
+        
 
     }
 }

@@ -10,9 +10,10 @@ namespace CSharpRunner
     class Program
     {
         
-        static readonly int MAX_TURNS = 1000;
+        static readonly int MAX_TURNS = 100000;
         static string HTML_FILE_PATH = Directory.GetCurrentDirectory() + "\\index.html";
         static Stopwatch watch;
+        static readonly string TEMPLATE_FILE_PATH = Directory.GetCurrentDirectory() + "\\Template.html";
 
         //Args: 
         // 0: .cs file path
@@ -35,6 +36,11 @@ namespace CSharpRunner
                 Game game;
                 Player player;
 
+                Log("Initiallizing bot..");
+                bot.Init();
+                Log("Bot initiallized");
+                System.Threading.Thread.Sleep(1000);
+
                 for (int i = 0; i < MAX_TURNS; i++)
                 {
                     if (win) break;
@@ -55,7 +61,7 @@ namespace CSharpRunner
                 Log("bot finished running");
                 Log("generating replay");
 
-                GenerateHtmlFile(JsonConvert.SerializeObject(maze, Formatting.None), JsonConvert.SerializeObject(turns, Formatting.None));
+                WriteIntoHtmlFile(JsonConvert.SerializeObject(maze, Formatting.None), JsonConvert.SerializeObject(turns, Formatting.None));
 
                 watch.Stop();
                 Log($"all done");
@@ -86,10 +92,9 @@ namespace CSharpRunner
             Console.ForegroundColor = ConsoleColor.Gray;
         }
 
-        public static void GenerateHtmlFile(string mazeData, string playerData)
+        public static void WriteIntoHtmlFile(string mazeData, string playerData)
         {
-            using (var sw = new StreamWriter(HTML_FILE_PATH))
-                sw.WriteLine($"<html><head><title>Visualizer</title><style> body {{ text-align: center; }}</style><script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.7/p5.js\"></script><script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.11/addons/p5.dom.js\"></script><script src=\"main.js\"></script></head><body bgcolor=\"#ede24b\"><p hidden id=\"maze\" name=\"maze\">{mazeData}</p><p hidden id=\"player\" name=\"player\">{playerData}</p></body></html>");
+            File.WriteAllText(HTML_FILE_PATH, File.ReadAllText(TEMPLATE_FILE_PATH).Replace("##MAZE CODE##", mazeData).Replace("##PLAYER CODE##", playerData));
         }
 
     }
