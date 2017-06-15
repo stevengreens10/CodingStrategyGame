@@ -29,7 +29,7 @@ namespace testBot1
             }
             Cell c = game.GetCurrentCell();
             for(var i = 0; i <= 3; i++){
-                if(!c.Walls[i])
+                if(!c.WallsArray[i])
                 {
                     game.Move((Direction) i);
                     break;
@@ -42,17 +42,19 @@ namespace testBot1
 This example bot loops through the directions and tries to move that direction if there is no wall in the way.
 
 ### API
-`public void doTurn(Game game){}` This is a function you must include for your bot to work. The code in this function will be called once each turn.
+`public void Init(){}` This is a function you must include for your bot to work. The code in this function will be executed once, before it begins starting its turns.
 
-`game.getTurn()` returns the current turn number.
+`public void DoTurn(Game game){}` This is a function you must include for your bot to work. The code in this function will be called once each turn.
+
+`game.GetTurn()` returns the current turn number.
 
 `game.Debug(String)` will display a debug message in the console along with the current turn number.
 
-`game.getCurrentCell()` returns the cell that the player is currently at.
+`game.GetCurrentCell()` returns the cell that the player is currently at.
 
-`game.getStartCell()` returns the cell that the player starts at.
+`game.GetStartCell()` returns the cell that the player starts at.
 
-`game.getEndCell()` returns the cell at the end of the maze.
+`game.GetEndCell()` returns the cell at the end of the maze.
 
 `game.Move(Direction)` will move the player in the specified direction. If there is a wall in the way, a warning message will appear in the console. Note that you may only move once each turn.
 
@@ -64,9 +66,9 @@ South: 2
 West: 3
 ```
 
-`cellObj.Walls[dirNumber]` yields a boolean that dictates whether a wall is present or not in that direction. `true` means that there is a wall.
+`cellObj.WallsArray[dirNumber]` yields a boolean that dictates whether a wall is present or not in that direction. `true` means that there is a wall.
 
-`cellObj.getLocation()` returns a Location object that has the column and row coordinate of the cell. These are stored in `location.x` and `location.y` respectively.
+`cellObj.GetLocation()` returns a Location object that has the column and row coordinate of the cell. These are stored in `location.x` and `location.y` respectively.
 
 `game.CellInDirection(Direction)` returns a cell in the specified direction from the current cell. If there is a wall in this direction, the function will return null and a warning message will appear in the console.
 
