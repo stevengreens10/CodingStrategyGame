@@ -13,15 +13,15 @@ namespace testBot1
         public void DoTurn(Game game)
         {
 
-	        if (game.GetTurn() == 0)
+		if (game.GetTurn() == 0)
 	        {
 	            game.Debug("This is the first turn!");
 	        }
 	        Cell c = game.GetCurrentCell();
 	        for(var i = 0; i <= 3; i++){
-            if(c.Walls[i]){
-              game.Move((Direction) i);
-            }
+	    		if(c.Walls[i]){
+	      		game.Move((Direction) i);
+	    	}
           }
         }
     }
