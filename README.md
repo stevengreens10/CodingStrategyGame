@@ -21,6 +21,8 @@ namespace testBot1
 {
     public class MyBot : IMazeBot
     {
+        public void Init(){}
+        
         public void DoTurn(Game game)
         {
             if (game.GetTurn() == 0)
@@ -56,6 +58,8 @@ This example bot loops through the directions and tries to move that direction i
 
 `game.GetEndCell()` returns the cell at the end of the maze.
 
+`game.IsCellReachable(Cell)` returns true if the player can move into the given cell.
+
 `game.Move(Direction)` will move the player in the specified direction. If there is a wall in the way, a warning message will appear in the console. Note that you may only move once each turn.
 
 The directions map to the following numbers: 
@@ -65,6 +69,8 @@ East: 1
 South: 2
 West: 3
 ```
+
+`game.Move(Cell)` will move the player to a certain cell if possible. If the player can not move to the given cell, a warning message will appear in the console.
 
 `cellObj.WallsArray[dirNumber]` yields a boolean that dictates whether a wall is present or not in that direction. `true` means that there is a wall.
 
