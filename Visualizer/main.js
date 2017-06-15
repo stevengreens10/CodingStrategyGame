@@ -12,6 +12,19 @@ function setup(){
   playerData = undefined;
   refreshData();
   createCanvas(scl*len0+1,scl*len1+1);
+  createP("");
+  var slow = createButton("Slow");
+  var normal = createButton("Normal");
+  var fast = createButton("Fast");
+  slow.mousePressed(function(){
+    frameRate(3);
+  });
+  normal.mousePressed(function(){
+    frameRate(6);
+  })
+  fast.mousePressed(function(){
+    frameRate(60);
+  })
   background(0);
   noFill();
   stroke(255);

@@ -89,7 +89,7 @@ namespace CSharpRunner
         public static void GenerateHtmlFile(string mazeData, string playerData)
         {
             using (var sw = new StreamWriter(HTML_FILE_PATH))
-                sw.WriteLine($"<html><head><title>Visualizer</title><style> body {{ text-align: center; }}</style><script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.7/p5.js\"></script><script src=\"main.js\"></script></head><body bgcolor=\"#ede24b\"><p hidden id=\"maze\" name=\"maze\">{mazeData}</p><p hidden id=\"player\" name=\"player\">{playerData}</p></body></html>");
+                sw.WriteLine($"<html><head><title>Visualizer</title><style> body {{ text-align: center; }}</style><script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.7/p5.js\"></script><script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.11/addons/p5.dom.js\"></script><script src=\"main.js\"></script></head><body bgcolor=\"#ede24b\"><p hidden id=\"maze\" name=\"maze\">{mazeData}</p><p hidden id=\"player\" name=\"player\">{playerData}</p></body></html>");
         }
 
     }
