@@ -2,6 +2,9 @@
 In this game, players will code a bot to compete with another player's bot. Whoever comes up with the best strategy will win. Collaboration with shaked6540.
 
 ## Documentation
+### Download
+You can download the game [here](https://www.dropbox.com/s/t7ts7atfq0n4v64/CodingStrategyGame.zip?dl=0).
+Once you extract the zip file, you can edit the example bot code and attempt to solve the maze with your bot.
 ### Running the game
 To run the game, you must type the following command into a console.
 ```
