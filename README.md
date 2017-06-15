@@ -38,7 +38,9 @@ namespace testBot1
 This example bot loops through the directions and tries to move that direction if there is no wall in the way.
 
 The directions map to the following numbers: 
-`North: 0`
-`East: 1`
-`South: 2`
-`West: 3`
+````
+North: 0
+East: 1
+South: 2
+West: 3
+```
