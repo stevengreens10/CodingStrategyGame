@@ -1,5 +1,5 @@
 # CodingStrategyGame
-In this game, players will code a bot to attempt to solve a randomly generated maze in a set number of turns. Collaboration with shaked6540.
+In this game, players will code a bot to attempt to solve a randomly generated maze in a set number of turns. Created by stevengreens10 and shaked6540
 
 ## Documentation
 ### Download
