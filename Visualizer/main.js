@@ -88,8 +88,15 @@ function draw(){
   
   if (!stopped) {
 	//if(turn >= 1000) turn = 0;
+	
+	if (turn == playerData.length)
+	{
+		stopped = true;
+		return;
+	}
+	
 	var player = playerData[turn].Player;
-
+	
 	var x = player.currentCell.x;
 	var y = player.currentCell.y;
 	console.log("Turn #", playerData[turn].turn, "(",x, ",",y,")");
