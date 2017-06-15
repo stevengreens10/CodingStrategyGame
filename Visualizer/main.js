@@ -13,18 +13,27 @@ function setup(){
   refreshData();
   createCanvas(scl*len0+1,scl*len1+1);
   createP("");
+  var rewind = createButton("Rewind");
   var slow = createButton("Slow");
   var normal = createButton("Normal");
   var fast = createButton("Fast");
+  var fastForward = createButton("Fast Forward")
+  rewind.mousePressed(function(){
+    turn-=25;
+    if(turn < 0) turn = 0;
+  });
   slow.mousePressed(function(){
     frameRate(3);
   });
   normal.mousePressed(function(){
     frameRate(6);
-  })
+  });
   fast.mousePressed(function(){
     frameRate(60);
-  })
+  });
+  fastForward.mousePressed(function(){
+    turn+=25;
+  });
   background(0);
   noFill();
   stroke(255);
@@ -33,22 +42,20 @@ function setup(){
     var x = cell.x*scl;
     var y = cell.y*scl;
     //Top left to top right
-    if(cell.Walls[0] === false) line(x,y,x+scl,y);
+    if(cell.Walls[0]) line(x,y,x+scl,y);
 
     //Top right to bottom right
-    if(cell.Walls[1] === false) line(x+scl,y,x+scl,y+scl);
+    if(cell.Walls[1]) line(x+scl,y,x+scl,y+scl);
     //Bottom right to bottom left
-    if(cell.Walls[2] === false) line(x+scl,y+scl,x,y+scl);
+    if(cell.Walls[2]) line(x+scl,y+scl,x,y+scl);
     //Bottom left to top left
-    if(cell.Walls[3] === false) line(x,y+scl,x,y);
+    if(cell.Walls[3]) line(x,y+scl,x,y);
   }
 
-  frameRate(3);
-  //setInterval(refreshData, 5000);
+  frameRate(6);
 }
 
 function draw(){
-//  background(51);
 
 
   if(turn >= 1000) turn = 0;
@@ -65,8 +72,8 @@ function draw(){
 
   fill(0,255,0);
   ellipse(x * scl + scl/2, y * scl + scl/2, scl/1.5, scl/1.5);
-  
-  
+
+
   turn++;
 
 
