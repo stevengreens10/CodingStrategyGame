@@ -76,6 +76,6 @@ West: 3
 
 `cellObj.GetLocation()` returns a Location object that has the column and row coordinate of the cell. These are stored in `location.x` and `location.y` respectively.
 
-`game.CellInDirection(Direction)` returns a cell in the specified direction from the current cell. If there is a wall in this direction, the function will return null and a warning message will appear in the console.
+`game.CellInDirection(Direction)` returns a cell in the specified direction from the current cell. If that direction is somewhere outside of the maze, the function will return null, and a warning message will appear in the console
 
 
