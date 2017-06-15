@@ -1,7 +1,7 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using Newtonsoft.Json;
 
 namespace CSharpRunner
 {
@@ -16,11 +16,15 @@ namespace CSharpRunner
         [JsonProperty()]
         public Cell EndCell { get; }
 
+        [JsonProperty()]
+        private int CellSize;
+
         internal int movesThisTurn = 0;
 
         internal Maze(int rows, int cols, int cellSize = 10)
         {
             Cells = new Cell[rows, cols];
+            CellSize = cellSize;
 
             Program.Log($"Generating maze [{rows} x {cols}]..");
 
@@ -32,7 +36,6 @@ namespace CSharpRunner
             StartCell = Cells[0,0];
             EndCell = BreakWalls();
 
-            //StartCell.Walls[0] = 0;
             EndCell.Walls[2] = 0;
 
             Program.Log("Finished generating maze");
@@ -176,6 +179,8 @@ namespace CSharpRunner
                 Program.Log($"{p} tried to move to {c}, which is not reachable");
             }
         }
+
+        internal bool IsCellReachable(Player p, Cell c) => p.currentCell.Neighbors.Contains(c) && WallBetweenCellsIsBroken(p.currentCell, c);
 
         private bool WallBetweenCellsIsBroken(Cell c, Cell c2)
         {
