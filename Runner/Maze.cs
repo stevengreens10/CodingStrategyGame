@@ -32,6 +32,9 @@ namespace CSharpRunner
             StartCell = Cells[0,0];
             EndCell = BreakWalls();
 
+            StartCell.Walls[0] = true;
+            EndCell.Walls[2] = true;
+
             Program.Log("Finished generating maze");
 
         }
