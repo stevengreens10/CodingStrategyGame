@@ -5,7 +5,7 @@ In this game, players will code a bot to compete with another player's bot. Whoe
 ### Running the game
 To run the game, you must type the following command into a console.
 ```
-Game.exe "[botname].cs" cols rows [cellsize]
+Game.exe "[botname].cs" [cols] [rows] [cellsize]
 ```
 `cellsize` is the side length of each cell in the maze in pixels.
 
