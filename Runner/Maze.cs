@@ -122,7 +122,12 @@ namespace CSharpRunner
         }
         internal void Move(Player p, Direction dir)
         {
-            if (movesThisTurn > 0) return;
+            if (movesThisTurn > 0)
+            {
+                Program.Log("Warning: Player tried to move more than once");
+                return;
+            }
+            
             var loc = p.CurrentCell.GetLocation();
 
             //dont let the player get out of the map

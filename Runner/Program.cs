@@ -27,11 +27,10 @@ namespace CSharpRunner
 
             try
             {
-
+                var bot = Bot.FromFile(args[0]);
                 var maze = new Maze(int.Parse(args[1]), int.Parse(args[2]), int.Parse(args[3]));
                 var lastPlayer = new Player(maze.StartCell);
                 var turns = new List<Game>();
-                var bot = Bot.FromFile(args[0]);
                 var win = false;
                 Game game;
                 Player player;
