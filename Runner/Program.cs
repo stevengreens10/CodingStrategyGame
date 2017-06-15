@@ -1,9 +1,8 @@
 ﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System;
-using System.Linq;
 
 namespace CSharpRunner
 {
@@ -39,7 +38,6 @@ namespace CSharpRunner
                 Log("Initiallizing bot..");
                 bot.Init();
                 Log("Bot initiallized");
-                System.Threading.Thread.Sleep(1000);
 
                 for (int i = 0; i < MAX_TURNS; i++)
                 {
