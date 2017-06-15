@@ -29,7 +29,7 @@ namespace testBot1
             }
             Cell c = game.GetCurrentCell();
             for(var i = 0; i <= 3; i++){
-                if(c.Walls[i])
+                if(!c.Walls[i])
                 {
                     game.Move((Direction) i);
                     break;
