@@ -43,14 +43,17 @@ function draw(){
   var x = player.currentCell.x;
   var y = player.currentCell.y;
   console.log("Turn #", playerData[turn].turn, "(",x, ",",y,")");
-  fill(0,255,0);
+
+  fill(0,0,0);
   stroke(0);
-  ellipse(x * scl + scl/2, y * scl + scl/2, scl/1.5, scl/1.5);
-  
-  fill(0,0,0)
   ellipse(lastTurnX * scl + scl/2, lastTurnY*scl + scl/2, scl/1.5, scl/1.5);
   lastTurnX = player.currentCell.x;
   lastTurnY = player.currentCell.y;
+
+  fill(0,255,0);
+  ellipse(x * scl + scl/2, y * scl + scl/2, scl/1.5, scl/1.5);
+  
+  
   turn++;
 
 
