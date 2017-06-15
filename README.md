@@ -19,24 +19,24 @@ using CSharpRunner;
 
 namespace testBot1
 {
-	public class MyBot : IMazeBot
-	{
-		public void DoTurn(Game game)
-		{
-			if (game.GetTurn() == 0)
-			{
-				game.Debug("This is the first turn!");
-			}
-			Cell c = game.GetCurrentCell();
-			for(var i = 0; i <= 3; i++){
-				if(c.Walls[i])
-				{
-					game.Move((Direction) i);
-					break;
-				}
-			}
-		}
-	}
+    public class MyBot : IMazeBot
+    {
+        public void DoTurn(Game game)
+        {
+            if (game.GetTurn() == 0)
+            {
+                game.Debug("This is the first turn!");
+            }
+            Cell c = game.GetCurrentCell();
+            for(var i = 0; i <= 3; i++){
+                if(c.Walls[i])
+                {
+                    game.Move((Direction) i);
+                    break;
+                }
+            }
+        }
+    }
 }
 ```
 This example bot loops through the directions and tries to move that direction if there is no wall in the way.
