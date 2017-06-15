@@ -22,7 +22,7 @@ namespace CSharpRunner
             Neighbors = new Cell[4];
 
             for (int i = 0; i < Walls.Length; i++)
-                Walls[i] = false;
+                Walls[i] = true;
 
             Visited = 0;
             Contents = new List<MapObject>();

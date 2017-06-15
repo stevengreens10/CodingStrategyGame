@@ -57,7 +57,7 @@ namespace CSharpRunner
                 return null;
             }
 
-            if (Player.CurrentCell.Walls[(int)dir])
+            if (!Player.CurrentCell.Walls[(int)dir])
             {
                 return Player.currentCell.Neighbors[(int)dir];
             }

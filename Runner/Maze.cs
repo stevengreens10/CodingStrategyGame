@@ -32,8 +32,7 @@ namespace CSharpRunner
             StartCell = Cells[0,0];
             EndCell = BreakWalls();
 
-            StartCell.Walls[0] = true;
-            EndCell.Walls[2] = true;
+            EndCell.Walls[2] = false;
 
             Program.Log("Finished generating maze");
 
@@ -99,27 +98,27 @@ namespace CSharpRunner
             {
                 if (c.GetLocation().Y > c2.GetLocation().Y)
                 {
-                    c.Walls[0] = true;
-                    c2.Walls[2] = true;
+                    c.Walls[0] = false;
+                    c2.Walls[2] = false;
                 }
 
                 else
                 {
-                    c.Walls[2] = true;
-                    c2.Walls[0] = true;
+                    c.Walls[2] = false;
+                    c2.Walls[0] = false;
                 }
             }
             else if (c.GetLocation().Y == c2.GetLocation().Y) // need to remove left or right
             {
                 if (c.GetLocation().X > c2.GetLocation().X)
                 {
-                    c.Walls[3] = true;
-                    c2.Walls[1] = true;
+                    c.Walls[3] = false;
+                    c2.Walls[1] = false;
                 }
                 else
                 {
-                    c.Walls[1] = true;
-                    c2.Walls[3] = true;
+                    c.Walls[1] = false;
+                    c2.Walls[3] = false;
                 }
             }
         }
@@ -157,7 +156,7 @@ namespace CSharpRunner
                 return;
             }
 
-            if (p.CurrentCell.Walls[(int)dir])
+            if (!p.CurrentCell.Walls[(int)dir])
             {
                 p.currentCell = p.currentCell.Neighbors[(int)dir];
                 movesThisTurn++;
