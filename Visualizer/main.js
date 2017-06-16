@@ -52,6 +52,20 @@ function setup(){
   });
 
   fastForward.mousePressed(function(){
+
+    for(var i = turn; i < turn + 25; i++){
+      var player = playerData[turn];
+
+      if(player){
+        var color = player.currentCell.Visited*10;
+      	fill(color/1.7, color, color*1.4);
+      	rect((lastTurnX * scl)+2, (lastTurnY*scl) + 1,scl-3, scl-2);
+
+      	lastTurnX = player.currentCell.x;
+      	lastTurnY = player.currentCell.y;
+      }
+    }
+
     turn+=25;
   });
 
@@ -97,29 +111,27 @@ function draw(){
   		return;
   	}
 
-  	var player = playerData[turn].Player;
+  	if(playerData[turn]) player = playerData[turn];
 
-    if(player){
-    	var x = player.currentCell.x;
-    	var y = player.currentCell.y;
-    	console.log("Turn #", playerData[turn].turn, "(",x, ",",y,")");
+  	var x = player.currentCell.x;
+  	var y = player.currentCell.y;
+  	//console.log("Turn #", playerData[turn].turn, "(",x, ",",y,")");
 
-    	fill(0,0,0);
-    	stroke(0);
+  	fill(0,0,0);
+  	stroke(0);
 
-    	var color = player.currentCell.Visited*10;
-    	fill(color/1.7, color, color*1.4);
-    	rect((lastTurnX * scl)+2, (lastTurnY*scl) + 1,scl-3, scl-2);
+  	var color = player.currentCell.Visited*10;
+  	fill(color/1.7, color, color*1.4);
+  	rect((lastTurnX * scl)+2, (lastTurnY*scl) + 1,scl-3, scl-2);
 
-    	lastTurnX = player.currentCell.x;
-    	lastTurnY = player.currentCell.y;
+  	lastTurnX = player.currentCell.x;
+  	lastTurnY = player.currentCell.y;
 
-    	fill(0,255,0);
-    	ellipse(x * scl + scl/2, y * scl + scl/2, scl/1.5, scl/1.5);
+  	fill(0,255,0);
+  	ellipse(x * scl + scl/2, y * scl + scl/2, scl/1.5, scl/1.5);
 
 
-    	turn++;
-    }
+  	turn++;
 	}
 }
 
