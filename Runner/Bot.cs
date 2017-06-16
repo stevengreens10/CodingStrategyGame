@@ -1,28 +1,50 @@
-﻿using Microsoft.CSharp;
-using System;
-using System.CodeDom.Compiler;
+﻿using System;
+using Microsoft.CodeDom.Providers.DotNetCompilerPlatform;
 using System.IO;
 using System.Linq;
+using System.CodeDom.Compiler;
+using System.Reflection;
 
 namespace CSharpRunner
 {
     public class Bot
     {
-        public static IMazeBot FromFile(string path)
+
+        public static CSharpCodeProvider GetCodeProvider() => new Lazy<CSharpCodeProvider>(() =>
+        {
+            var csc = new CSharpCodeProvider();
+            var settings = csc
+                .GetType()
+                .GetField("_compilerSettings", BindingFlags.Instance | BindingFlags.NonPublic)
+                .GetValue(csc);
+
+            var path = settings
+                .GetType()
+                .GetField("_compilerFullPath", BindingFlags.Instance | BindingFlags.NonPublic);
+
+            path.SetValue(settings, ((string)path.GetValue(settings)).Replace(@"bin\roslyn\", @"roslyn\"));
+
+            return csc;
+        }).Value;
+
+        public static T FromFile<T>(string path)
         {
             if (!File.Exists(path))
                 throw new ArgumentException("File does not exist");
 
-            IMazeBot result = null;
-            using (var cs = new CSharpCodeProvider())
+
+
+            T result = default(T);
+            using (var cs = GetCodeProvider())
             {
-                var assembly = typeof(IMazeBot).Assembly;
+                var assembly = typeof(T).Assembly;
                 var cp = new CompilerParameters()
                 {
                     GenerateInMemory = false,
                     GenerateExecutable = false,
-                    IncludeDebugInformation = true
+                    IncludeDebugInformation = true,
                 };
+
                 if (Environment.OSVersion.Platform.ToString() != "Unix") cp.TempFiles = new TempFileCollection(Environment.GetEnvironmentVariable("TEMP"), true);
                 else cp.TempFiles.KeepFiles = true;
                 cp.ReferencedAssemblies.Add("System.dll");
@@ -60,11 +82,11 @@ namespace CSharpRunner
                 Program.Log("Compile finished");
 
                 var types = cr.CompiledAssembly.GetTypes();
-                var botType = types.Where(x => x.GetInterfaces().Contains(typeof(IMazeBot))).FirstOrDefault();
+                var botType = types.Where(x => x.GetInterfaces().Contains(typeof(T))).FirstOrDefault();
                 if (botType == null)
                     throw new TypeLoadException("Could not find an IMazeBot class");
 
-                result = (IMazeBot)cr.CompiledAssembly.CreateInstance(botType.FullName);
+                result = (T)cr.CompiledAssembly.CreateInstance(botType.FullName);
 
             }
 

@@ -3,14 +3,16 @@ In this game, players will code a bot to attempt to solve a randomly generated m
 
 ## Documentation
 ### Download
-You can download the game [here](https://www.dropbox.com/s/t7ts7atfq0n4v64/CodingStrategyGame.zip?dl=0).
-Once you extract the zip file, you can edit the example bot code and attempt to solve the maze with your bot.
+You can download the game [here](https://mega.nz/#!0ghm3TDQ!fk0iFgCTSFZGgvD_2y0e9BhqP4tx2uTuL4dFvLXR3CQ).
+Once you extract the rar file, you can edit the example bot code and attempt to solve the maze with your bot.
 ### Running the game
 To run the game, you must type the following command into a console.
 ```
-Game.exe "[botname].cs" [cols] [rows] [cellsize]
+CSharpRunner.exe "[botname].cs" [cols] [rows] [cellsize]
 ```
 `cellsize` is the side length of each cell in the maze in pixels.
+
+Or, simply click on "Run.bat". It will load the default "MyBot.cs" file
 
 ### Bot Creation
 Example bot: 
@@ -21,22 +23,15 @@ namespace testBot1
 {
     public class MyBot : IMazeBot
     {
-        public void Init(){}
+        public void Init()
+        {
+            //Init all your variables here.
+            //Note: You cant get the Game object here, this method runs only once before the first turn
+        }
         
         public void DoTurn(Game game)
         {
-            if (game.GetTurn() == 0)
-            {
-                game.Debug("This is the first turn!");
-            }
-            Cell c = game.GetCurrentCell();
-            for(var i = 0; i <= 3; i++){
-                if(!c.WallsArray[i])
-                {
-                    game.Move((Direction) i);
-                    break;
-                }
-            }
+            //Write all your code here, this method will run every turn
         }
     }
 }
@@ -60,7 +55,7 @@ This example bot loops through the directions and tries to move that direction i
 
 `game.IsCellReachable(Cell)` returns true if the player can move into the given cell.
 
-`game.Move(Direction)` will move the player in the specified direction. If there is a wall in the way, a warning message will appear in the console. Note that you may only move once each turn.
+`game.Move(Direction)` will move the player in the specified direction. If there is a wall in the way, a warning message will appear in the console. Note that you may only move once each turn. returns true if the player moved.
 
 The directions map to the following numbers: 
 ```
@@ -70,7 +65,7 @@ South: 2
 West: 3
 ```
 
-`game.Move(Cell)` will move the player to a certain cell if possible. If the player can not move to the given cell, a warning message will appear in the console.
+`game.Move(Cell)` will move the player to a certain cell if possible. If the player can not move to the given cell, a warning message will appear in the console. returns true if the player moved.
 
 `cellObj.WallsArray[dirNumber]` yields a boolean that dictates whether a wall is present or not in that direction. `true` means that there is a wall.
 

@@ -73,6 +73,8 @@ function drawMaze(){
     var cell = cells[i];
     var x = cell.x*scl;
     var y = cell.y*scl;
+
+
     //Top left to top right
     if(cell.Walls[0]) line(x,y,x+scl,y);
     //Top right to bottom right
@@ -90,27 +92,38 @@ function draw(){
   frameRate(FPS);
 
   if (!stopped) {
-  //if(turn >= 1000) turn = 0;
-  var player = playerData[turn].Player;
-  var x = player.currentCell.x;
-  var y = player.currentCell.y;
-  console.log("Turn #", playerData[turn].turn, "(",x, ",",y,")");
+	//if(turn >= 1000) turn = 0;
 
-  fill(0,0,0);
-  stroke(0);
-  ellipse(lastTurnX * scl + scl/2, lastTurnY*scl + scl/2, scl/1.5, scl/1.5);
-  lastTurnX = player.currentCell.x;
-  lastTurnY = player.currentCell.y;
+	if (turn == playerData.length)
+	{
+		stopped = true;
+		return;
+	}
 
-  fill(0,255,0);
-  ellipse(x * scl + scl/2, y * scl + scl/2, scl/1.5, scl/1.5);
+	var player = playerData[turn].Player;
+
+	var x = player.currentCell.x;
+	var y = player.currentCell.y;
+	console.log("Turn #", playerData[turn].turn, "(",x, ",",y,")");
+
+	fill(0,0,0);
+	stroke(0);
+
+	var color = player.currentCell.Visited*10;
+	fill(color/1.7, color, color*1.4);
+	rect((lastTurnX * scl)+2, (lastTurnY*scl) + 1,scl-3, scl-2);
+
+	lastTurnX = player.currentCell.x;
+	lastTurnY = player.currentCell.y;
+
+	fill(0,255,0);
+	ellipse(x * scl + scl/2, y * scl + scl/2, scl/1.5, scl/1.5);
 
 
-  turn++;
-  }
-
-
+	turn++;
+	}
 }
+
 
 function refreshData(){
 	var data = JSON.parse(document.getElementById("maze").innerText);

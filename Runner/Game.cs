@@ -22,13 +22,13 @@ namespace CSharpRunner
         /// Moves the player in the given direction
         /// </summary>
         /// <param name="dir">The direction to move the player to</param>
-        public void Move(Direction dir) => Maze.Move(Player, dir);
+        public bool Move(Direction dir) => Maze.Move(Player, dir);
 
         /// <summary>
         /// Moves the player to the given Cell
         /// </summary>
         /// <param name="c">The Cell to move to. (Must be near the current cell, and the walls must be broken)</param>
-        public void Move(Cell c) => Maze.Move(Player, c);
+        public bool Move(Cell c) => Maze.Move(Player, c);
 
         /// <summary>
         /// Checks if the player can move to a Cell
