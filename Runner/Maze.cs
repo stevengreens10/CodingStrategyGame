@@ -124,60 +124,48 @@ namespace CSharpRunner
                 }
             }
         }
-        internal void Move(Player p, Direction dir)
+        internal bool Move(Player p, Direction dir)
         {
             if (movesThisTurn > 0)
             {
                 Program.Log("Warning: Player tried to move more than once");
-                return;
+                return false ;
             }
             
             var loc = p.CurrentCell.GetLocation();
 
             //dont let the player get out of the map
-            if (loc.Y == 0 && dir == Direction.North)
+            if (loc.Y == 0 && dir == Direction.North || loc.Y == Cells.GetLength(1) && dir == Direction.South ||
+                loc.X == 0 && dir == Direction.West  || loc.X == Cells.GetLength(0) && dir == Direction.East)
             {
                 Program.Log("Warning: Player tried to get out of the map");
-                return;
-            }
-            if (loc.Y == Cells.GetLength(1) && dir == Direction.South)
-            {
-                Program.Log("Warning: Player tried to get out of the map");
-                return;
-            }
-
-            if (loc.X == 0 && dir == Direction.West)
-            {
-                Program.Log("Warning: Player tried to get out of the map");
-                return;
-            }
-
-            if (loc.X == Cells.GetLength(0) && dir == Direction.East)
-            {
-                Program.Log("Warning: Player tried to get out of the map");
-                return;
+                return false;
             }
 
             if (p.CurrentCell.Walls[(int)dir] == 0)
             {
                 p.SetCurrentCell(p.currentCell.Neighbors[(int)dir]);
                 movesThisTurn++;
+                return true;
             }
             else
             {
                 Program.Log($"player tried to get into a wall");
+                return false;
             }
 
         }
 
-        internal void Move(Player p, Cell c)
+        internal bool Move(Player p, Cell c)
         {
             if (p.currentCell.Neighbors.Contains(c) && WallBetweenCellsIsBroken(p.currentCell, c))
-                p.SetCurrentCell(c);
-            else
             {
-                Program.Log($"{p} tried to move to {c}, which is not reachable");
+                p.SetCurrentCell(c);
+                return true;
             }
+            Program.Log($"{p} tried to move to {c}, which is not reachable");
+            return false;
+
         }
 
         internal bool IsCellReachable(Player p, Cell c) => p.currentCell.Neighbors.Contains(c) && WallBetweenCellsIsBroken(p.currentCell, c);

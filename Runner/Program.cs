@@ -30,7 +30,7 @@ namespace CSharpRunner
             sb.Append("[");
             try
             {
-                var bot = Bot.FromFile(args[0]);
+                var bot = Bot.FromFile<IMazeBot>(args[0]);
                 var maze = new Maze(int.Parse(args[1]), int.Parse(args[2]), int.Parse(args[3]));
                 var lastPlayer = new Player(maze.StartCell);
                 var stats = new { TurnsCount = 0, Win = false };
