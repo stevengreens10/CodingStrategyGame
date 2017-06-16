@@ -3,14 +3,16 @@ In this game, players will code a bot to attempt to solve a randomly generated m
 
 ## Documentation
 ### Download
-You can download the game [here](https://www.dropbox.com/s/t7ts7atfq0n4v64/CodingStrategyGame.zip?dl=0).
-Once you extract the zip file, you can edit the example bot code and attempt to solve the maze with your bot.
+You can download the game [here](https://mega.nz/#!0ghm3TDQ!fk0iFgCTSFZGgvD_2y0e9BhqP4tx2uTuL4dFvLXR3CQ).
+Once you extract the rar file, you can edit the example bot code and attempt to solve the maze with your bot.
 ### Running the game
 To run the game, you must type the following command into a console.
 ```
-Game.exe "[botname].cs" [cols] [rows] [cellsize]
+CSharpRunner.exe "[botname].cs" [cols] [rows] [cellsize]
 ```
 `cellsize` is the side length of each cell in the maze in pixels.
+
+Or, simply click on "Run.bat". It will load the default "MyBot.cs" file
 
 ### Bot Creation
 Example bot: 
