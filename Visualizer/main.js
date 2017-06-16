@@ -53,15 +53,20 @@ function setup(){
 
   fastForward.mousePressed(function(){
 
-    for(var i = turn; i < turn + 25; i++){
-      var player = playerData[turn];
+    for(var i = turn-1; i < turn + 25; i++){
+
+      if (i >= playerData.length)
+    	{
+        break;
+    	}
+
+      var player = playerData[i].Player;
 
       if(player){
         var color = player.currentCell.Visited*10;
       	fill(color/1.7, color, color*1.4);
-      	rect((lastTurnX * scl)+2, (lastTurnY*scl) + 1,scl-3, scl-2);
-
-      	lastTurnX = player.currentCell.x;
+      	rect((player.currentCell.x * scl)+2, (player.currentCell.y*scl) + 1,scl-3, scl-2);
+        lastTurnX = player.currentCell.x;
       	lastTurnY = player.currentCell.y;
       }
     }
