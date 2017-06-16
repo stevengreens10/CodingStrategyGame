@@ -21,22 +21,15 @@ namespace testBot1
 {
     public class MyBot : IMazeBot
     {
-        public void Init(){}
+        public void Init()
+        {
+            //Init all your variables here.
+            //Note: You cant get the Game object here, this method runs only once before the first turn
+        }
         
         public void DoTurn(Game game)
         {
-            if (game.GetTurn() == 0)
-            {
-                game.Debug("This is the first turn!");
-            }
-            Cell c = game.GetCurrentCell();
-            for(var i = 0; i <= 3; i++){
-                if(!c.WallsArray[i])
-                {
-                    game.Move((Direction) i);
-                    break;
-                }
-            }
+            //Write all your code here, this method will run every turn
         }
     }
 }
