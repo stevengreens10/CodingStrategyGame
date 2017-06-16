@@ -21,23 +21,24 @@ function setup(){
   var stopButton = createButton("Stop");
   var fast = createButton("+Speed");
   var fastForward = createButton(">>")
-  
-  
+
+
   restart.mousePressed(function(){
 	  stopped = false;
 	  turn = 0;
+    drawMaze();
   });
-  
+
   rewind.mousePressed(function(){
     turn-=25;
     if(turn < 0) turn = 0;
   });
-  
+
   slow.mousePressed(function(){
     FPS /= 2;
-	if (FPS < 1) FPS = 1; 
+	if (FPS < 1) FPS = 1;
   });
-  
+
   fast.mousePressed(function(){
 	  if (stopped)
 	  {
@@ -49,16 +50,22 @@ function setup(){
 		  FPS *= 2;
 	  }
   });
-  
+
   fastForward.mousePressed(function(){
     turn+=25;
   });
-  
+
   stopButton.mousePressed(function(){
 	  stopped = true;
   });
-  
-  
+
+
+  drawMaze();
+
+
+}
+
+function drawMaze(){
   background(0);
   noFill();
   stroke(255);
@@ -68,7 +75,6 @@ function setup(){
     var y = cell.y*scl;
     //Top left to top right
     if(cell.Walls[0]) line(x,y,x+scl,y);
-
     //Top right to bottom right
     if(cell.Walls[1]) line(x+scl,y,x+scl,y+scl);
     //Bottom right to bottom left
@@ -76,15 +82,13 @@ function setup(){
     //Bottom left to top left
     if(cell.Walls[3]) line(x,y+scl,x,y);
   }
-
-  
 }
 
 function draw(){
-	
+
 
   frameRate(FPS);
-  
+
   if (!stopped) {
   //if(turn >= 1000) turn = 0;
   var player = playerData[turn].Player;
