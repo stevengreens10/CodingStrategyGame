@@ -105,13 +105,13 @@ function draw(){
   frameRate(FPS);
 
   if (!stopped) {
-  	if (turn == playerData.length)
+  	if (turn >= playerData.length)
   	{
   		stopped = true;
-  		return;
+      turn = playerData.length-1;
   	}
 
-  	if(playerData[turn]) player = playerData[turn];
+  	player = playerData[turn].Player;
 
   	var x = player.currentCell.x;
   	var y = player.currentCell.y;
