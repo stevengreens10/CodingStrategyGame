@@ -30,6 +30,24 @@ function setup(){
   });
 
   rewind.mousePressed(function(){
+    for(var i = turn; i > turn - 25; i--){
+
+      if (i < 0)
+    	{
+        break;
+    	}
+
+      var player = playerData[i].Player;
+
+      if(player){
+        var color = player.currentCell.Visited*10;
+      	fill(color/1.7, color, color*1.4);
+      	rect((player.currentCell.x * scl)+2, (player.currentCell.y*scl) + 1,scl-3, scl-2);
+        // lastTurnX = player.currentCell.x;
+      	// lastTurnY = player.currentCell.y;
+      }
+    }
+
     turn-=25;
     if(turn < 0) turn = 0;
   });
